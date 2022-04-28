@@ -143,8 +143,7 @@ class Game():
         return f"G<{self.players[RIGHT_PLAYER]}:{self.players[LEFT_PLAYER]}>"
 
 
-class Nave(pygame.sprite.Sprite):
-    
+class Pistolero(pygame.sprite.Sprite):
     def __init__(self,player):
         super().__init__()
         self.player = player
@@ -167,16 +166,24 @@ class Nave(pygame.sprite.Sprite):
 class Display():
     def __init__(self, game):
         self.game = game
-        self.naves = [Nave(self.game.get_player(i)) for i in range(2)]
+        self.pistol = [Pistolero(self.game.get_player(i)) for i in range(2)]
         self.all_sprites = pygame.sprite.Group()
-        self.naves_group = pygame.sprite.Group()
+        self.pistoleros_group = pygame.sprite.Group()
         self.bala_group = pygame.sprite.Group()
-        for nave  in self.naves:
-            self.all_sprites.add(nave)
-            self.naves_group.add(nave)
+        for p in self.pistol:
+            self.all_sprites.add(p)
+            self.pistoleros_group.add(p)
         self.screen = pygame.display.set_mode(SIZE)
         self.clock =  pygame.time.Clock()  #FPS
         self.background = pygame.image.load('desierto.png')
+        self.vidas_izq = pygame.image.load('vidas.png')
+        self.vidas_izq = pygame.transform.scale(self.vidas_izq,(66,66))
+        self.rect_izq = self.vidas_izq.get_rect()
+        self.rect_izq.centerx, self.rect_izq.centery = [50,10]
+        self.vidas_der = pygame.image.load('vidas.png')
+        self.vidas_der = pygame.transform.scale(self.vidas_der,(66,66))
+        self.rect_der = self.vidas_der.get_rect()
+        self.rect_der.centerx, self.rect_der.centery = [SIZE[X]-50,10]
         pygame.init()
 
     def analyze_events(self, side):
@@ -203,12 +210,12 @@ class Display():
         if side == RIGHT_PLAYER:
             for bala in self.balas_dch:
                 bala_dib = ProyectileSprite(bala)
-                if pygame.sprite.collide_rect(bala_dib, self.naves[LEFT_PLAYER]):
+                if pygame.sprite.collide_rect(bala_dib, self.pistol[LEFT_PLAYER]):
                     events.append("collide_jugador")
         else:
             for bala in self.balas_izq:
                 bala_dib = ProyectileSprite(bala)
-                if pygame.sprite.collide_rect(bala_dib, self.naves[RIGHT_PLAYER]):
+                if pygame.sprite.collide_rect(bala_dib, self.pistol[RIGHT_PLAYER]):
                     events.append("collide_jugador")
         return events
 
@@ -225,13 +232,15 @@ class Display():
             bala_dib = ProyectileSprite(bala)
             self.bala_group.add(bala_dib)
         self.screen.blit(self.background, (0, 0))
+        self.screen.blit(self.vidas_izq, (70,10))
+        self.screen.blit(self.vidas_der, (SIZE[X]-136,10))
         #score = self.game.get_score()
         vidas = self.game.get_vidas()
-        font = pygame.font.Font(None, 74)
+        font = pygame.font.Font(None, 48)
         text = font.render(f"{vidas[LEFT_PLAYER]}", -1, WHITE)
-        self.screen.blit(text, (250, 10))
+        self.screen.blit(text, (93, 30))
         text = font.render(f"{vidas[RIGHT_PLAYER]}", -1, WHITE)
-        self.screen.blit(text, (SIZE[X]-250, 10))
+        self.screen.blit(text, (SIZE[X]-113, 30))
         self.bala_group.draw(self.screen)
         self.bala_group.empty()
         self.all_sprites.draw(self.screen)

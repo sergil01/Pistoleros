@@ -214,21 +214,23 @@ class Game():
             p.borrar_bala(pos)
             self.toco_otro = 1
             self.vidas[LEFT_PLAYER] -= 1
-            if self.vidas[RIGHT_PLAYER] <=0:
+            if self.vidas[LEFT_PLAYER] <=0:
                 self.vidas[LEFT_PLAYER] =3
                 self.vidas[RIGHT_PLAYER] =3
                 self.score[RIGHT_PLAYER] += 1
-           
-
-        else :
+                self.players[LEFT_PLAYER].restablecer()
+                self.players[RIGHT_PLAYER].restablecer()
+        else:
             pos = self.players[RIGHT_PLAYER].pos
             p.borrar_bala(pos)
             self.toco_otro = 1
             self.vidas[RIGHT_PLAYER] -= 1
             if self.vidas[RIGHT_PLAYER] <=0:
-                self.vidas[LEFT_PLAYER] =3
+                self.vidas[RIGHT_PLAYER] =3
                 self.vidas[RIGHT_PLAYER] =3
                 self.score[LEFT_PLAYER] += 1
+                self.players[LEFT_PLAYER].restablecer()
+                self.players[RIGHT_PLAYER].restablecer()
         self.players[player] = p
         self.lock.release()
    
