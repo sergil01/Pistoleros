@@ -89,8 +89,8 @@ class Game():
         self.listaDisparo1 = self.players[0].listaDisparo
         self.listaDisparo2 = self.players[1].listaDisparo
         self.lista_posiciones = []
-        self.score = [0,0]
-        self.vidas = [3,3]
+        #self.puntos = [0,0]
+        self.vidas = [5,5]
         self.running = True
 
     def get_player(self, side):
@@ -104,13 +104,13 @@ class Game():
     
     def set_lista(self, side,lista):
         self.players[side].set_lista(lista)
-        
-    def get_score(self):
-        return self.score
+    """    
+    def get_puntos(self):
+        return self.puntos
 
-    def set_score(self, score):
-        self.score = score
-        
+    def set_puntos(self, puntos):
+        self.puntos = puntos
+    """    
     def get_vidas(self):
         return self.vidas
 
@@ -234,13 +234,13 @@ class Display():
         self.screen.blit(self.background, (0, 0))
         self.screen.blit(self.vidas_izq, (70,10))
         self.screen.blit(self.vidas_der, (SIZE[X]-136,10))
-        #score = self.game.get_score()
+        #puntos = self.game.get_puntos()
         vidas = self.game.get_vidas()
         font = pygame.font.Font(None, 48)
         text = font.render(f"{vidas[LEFT_PLAYER]}", -1, WHITE)
-        self.screen.blit(text, (93, 30))
+        self.screen.blit(text, (94, 28))
         text = font.render(f"{vidas[RIGHT_PLAYER]}", -1, WHITE)
-        self.screen.blit(text, (SIZE[X]-113, 30))
+        self.screen.blit(text, (SIZE[X]-112, 28))
         self.bala_group.draw(self.screen)
         self.bala_group.empty()
         self.all_sprites.draw(self.screen)
