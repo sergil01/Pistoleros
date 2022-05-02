@@ -187,6 +187,9 @@ class Display():
         self.lose = pygame.image.load('perdedor.png')
         self.lose = pygame.transform.scale(self.lose,(250,140))
         pygame.init()
+        pygame.mixer.init()
+        self.musica = pygame.mixer.Sound('musica.wav')
+        pygame.mixer.Sound(self.musica, -1)
 
     def analyze_events(self, side):
         events = []
@@ -245,16 +248,12 @@ class Display():
         self.screen.blit(text, (SIZE[X]-112, 28))
         self.bala_group.draw(self.screen)
         self.bala_group.empty()
-        if vidas[0] <= 0 or vidas[1] <= 0:
-            font2 = pygame.font.Font(None,100)
-            text1 = font2.render(f"GAME OVER", 1, WHITE)
-            self.screen.blit(text1, (150,250))
-            if vidas[0] <= 0:
-                self.screen.blit(self.lose, (50,100))
-                self.screen.blit(self.win, (SIZE[X]//2+50,100))
-            elif vidas[1] <= 0:
-                self.screen.blit(self.win, (50,100))
-                self.screen.blit(self.lose, (SIZE[X]//2+50,100))
+        if vidas[0] <= 0:
+            self.screen.blit(self.lose, (50,100))
+            self.screen.blit(self.win, (SIZE[X]//2+50,100))
+        elif vidas[1] <= 0:
+            self.screen.blit(self.win, (50,100))
+            self.screen.blit(self.lose, (SIZE[X]//2+50,100))
         self.all_sprites.draw(self.screen)
         pygame.display.flip()
 
