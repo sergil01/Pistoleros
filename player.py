@@ -183,7 +183,9 @@ class Display():
         self.rect_der = self.vidas_der.get_rect()
         self.rect_der.centerx, self.rect_der.centery = [SIZE[X]-50,10]
         self.win = pygame.image.load('ganador.png')
+        self.win = pygame.transform.scale(self.win,(250,140))
         self.lose = pygame.image.load('perdedor.png')
+        self.lose = pygame.transform.scale(self.lose,(250,140))
         pygame.init()
 
     def analyze_events(self, side):

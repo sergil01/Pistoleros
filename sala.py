@@ -2,6 +2,7 @@ from multiprocessing.connection import Listener
 from multiprocessing import Process, Manager, Value, Lock
 import traceback
 import sys
+import time
 
 LEFT_PLAYER = 0
 RIGHT_PLAYER = 1
@@ -149,7 +150,8 @@ class Game():
 
     def stop(self):
         vidas = self.get_vidas()
-        if vidas[0] <= 0 or vidas[1] <= 0:  
+        if vidas[0] <= 0 or vidas[1] <= 0:
+            time.sleep(10)
             self.running.value = 0
     
     def finish(self):
