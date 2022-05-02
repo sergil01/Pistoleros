@@ -182,6 +182,8 @@ class Display():
         self.vidas_der = pygame.transform.scale(self.vidas_der,(66,66))
         self.rect_der = self.vidas_der.get_rect()
         self.rect_der.centerx, self.rect_der.centery = [SIZE[X]-50,10]
+        self.win = pygame.image.load('ganador.png')
+        self.lose = pygame.image.load('perdedor.png')
         pygame.init()
 
     def analyze_events(self, side):
@@ -245,6 +247,12 @@ class Display():
             font2 = pygame.font.Font(None,100)
             text1 = font2.render(f"GAME OVER", 1, WHITE)
             self.screen.blit(text1, (150,250))
+            if vidas[0] <= 0:
+                self.screen.blit(self.lose, (50,100))
+                self.screen.blit(self.win, (SIZE[X]//2+50,100))
+            elif vidas[1] <= 0:
+                self.screen.blit(self.win, (50,100))
+                self.screen.blit(self.lose, (SIZE[X]//2+50,100))
         self.all_sprites.draw(self.screen)
         pygame.display.flip()
 
