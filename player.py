@@ -189,7 +189,7 @@ class Display():
         pygame.init()
         pygame.mixer.init()
         self.musica = pygame.mixer.Sound('musica.wav')
-        pygame.mixer.Sound(self.musica, -1)
+        pygame.mixer.Sound.play(self.musica, -1)
 
     def analyze_events(self, side):
         events = []
